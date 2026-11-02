@@ -1,0 +1,7 @@
+site_name: Документация калькулятора
+
+nav:
+  - Главная: index.md
+
+theme:
+  name: mkdocs
