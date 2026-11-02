@@ -20,5 +20,8 @@ jobs:
       - name: Установить зависимости
         run: pip install -r requirements.txt
 
+      - name: Ожидание перед тестами
+        run: sleep 120  
+
       - name: Запустить тесты
         run: pytest
