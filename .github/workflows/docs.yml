@@ -1,12 +1,15 @@
-name: Build documentation
+name: Build and deploy documentation
 
 on:
   push:
   pull_request:
     branches: [main]
 
+permissions:
+  contents: read
+
 jobs:
-  build-docs:
+  build:
     runs-on: ubuntu-latest
 
     steps:
@@ -21,11 +24,32 @@ jobs:
       - name: Установить зависимости
         run: pip install -r requirements.txt
 
+      - name: Запустить тесты
+        run: pytest
+
       - name: Собрать документацию
         run: mkdocs build --strict
 
-      - name: Сохранить результат сборки
-        uses: actions/upload-artifact@v4
+      - name: Сохранить артефакт для GitHub Pages
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        uses: actions/upload-pages-artifact@v4
         with:
-          name: documentation
           path: site/
+
+  deploy:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: build
+    runs-on: ubuntu-latest
+
+    permissions:
+      pages: write
+      id-token: write
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Опубликовать документацию
+        id: deployment
+        uses: actions/deploy-pages@v4
