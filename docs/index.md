@@ -20,12 +20,10 @@ pip install -r requirements.txt
 pytest
 ```
 
-## Пример использования
+## Описание функций из кода
 
-```python
-from calculator import add, subtract, multiply
+::: calculator.add
 
-print(add(2, 3))       # 5
-print(subtract(5, 3))  # 2
-print(multiply(4, 3))  # 12
-```
+::: calculator.subtract
+
+::: calculator.multiply

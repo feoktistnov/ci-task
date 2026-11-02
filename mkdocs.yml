@@ -5,3 +5,7 @@ nav:
 
 theme:
   name: mkdocs
+
+plugins:
+  - search
+  - mkdocstrings
